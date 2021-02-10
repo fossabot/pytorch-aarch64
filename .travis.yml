@@ -6,18 +6,18 @@ dist: focal
 services:
   - docker
 
-env:
-  - PYVER=39
-  - PYVER=38
-  - PYVER=37
-  - PYVER=36
+env: PYVER=39
+#  - PYVER=39
+#  - PYVER=38
+#  - PYVER=37
+#  - PYVER=36
 
-jobs:
-  include:
-    - env: PYVER=39
-    - env: PYVER=38
-    - env: PYVER=37
-    - env: PYVER=36
+#jobs:
+#  include:
+#    - env: PYVER=39
+#    - env: PYVER=38
+#    - env: PYVER=37
+#    - env: PYVER=36
 
 before_install:
   - bash check_arch.sh
