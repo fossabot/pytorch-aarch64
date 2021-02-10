@@ -1,0 +1,47 @@
+os: linux
+arch: arm64-graviton2
+virt: vm
+group: edge
+dist: focal
+services:
+  - docker
+
+env:
+  - PYVER=39
+  - PYVER=38
+  - PYVER=37
+  - PYVER=36
+
+jobs:
+  include:
+    - env: PYVER=39
+    - env: PYVER=38
+    - env: PYVER=37
+    - env: PYVER=36
+
+before_install:
+  - bash check_arch.sh
+  - docker pull "kumatea/build:py$PYVER-ci"
+
+install:
+  - mkdir whl
+  - mkdir whl/171 && mkdir whl/170 && mkdir whl/160 && mkdir whl/151 && mkdir whl/150 && mkdir whl/141 && mkdir whl/140
+  - docker run --name "py$PYVER" -v build:/root/build "kumatea/build:py$PYVER-ci" /bin/bash
+
+script:
+  - cd build
+  - bash build.sh "$PYVER"
+  - tar -cJf "whl-$PYVER.tar.xz" whl
+  - exit
+  - mkdir artifacts
+  - mv "build/whl-$PYVER.tar.xz" artifacts/
+
+deploy:
+  provider: gcs
+  access_key_id: "$GCSKEYID"
+  secret_access_key: "$GCSKEYSEC"
+  bucket: "pytorch-aarch64"
+  skip_cleanup: true
+  on:
+    branch: ci-whl
+  local-dir: artifacts

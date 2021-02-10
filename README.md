@@ -1,2 +1,4 @@
 # pytorch-aarch64
-PyTorch, torchvision and torchaudio wheel for aarch64 / ARM64 devices
+## ci-whl
+
+Building PyTorch wheels (whl) via CI
