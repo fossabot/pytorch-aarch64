@@ -42,6 +42,8 @@ deploy:
   secret_access_key: "$GCSKEYSEC"
   bucket: "pytorch-aarch64"
   skip_cleanup: true
+  cleanup: false
   on:
     branch: ci-whl
   local-dir: artifacts
+  run: echo "Uploaded successfully!"
