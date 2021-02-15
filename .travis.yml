@@ -6,32 +6,32 @@ dist: focal
 services:
   - docker
 
-env: PYVER=39
-#  - PYVER=39
-#  - PYVER=38
-#  - PYVER=37
-#  - PYVER=36
+env:
+  - PYVER=39
+  - PYVER=38
+  - PYVER=37
+  - PYVER=36
 
-#jobs:
-#  include:
-#    - env: PYVER=39
-#    - env: PYVER=38
-#    - env: PYVER=37
-#    - env: PYVER=36
+jobs:
+  include:
+    - env: PYVER=39
+    - env: PYVER=38
+    - env: PYVER=37
+    - env: PYVER=36
 
 before_install:
-  - bash check_arch.sh
+  - bash check-arch.sh
   - docker pull "kumatea/build:py$PYVER-ci"
 
 install:
   - mkdir whl
-  - mkdir whl/171 && mkdir whl/170 && mkdir whl/160 && mkdir whl/151 && mkdir whl/150 && mkdir whl/141 && mkdir whl/140
-  - docker run --name "py$PYVER" -v $(pwd):/build "kumatea/build:py$PYVER-ci" /bin/bash -c "cd /build && bash run.sh $PYVER"
+  - docker run --name "py$PYVER" -v "$(pwd):/build" "kumatea/build:py$PYVER-ci" /bin/bash -c "cd /build && bash run.sh $PYVER"
 
 script:
-  - tar -cJf "whl-$PYVER.tar.xz" whl
+  - DATETODAY=$(date -I | tr -d "-")
+  - tar -cJf "$DATETODAY-$PYVER.tar.xz" whl
   - mkdir artifacts
-  - cp "whl-$PYVER.tar.xz" artifacts/
+  - cp "$DATETODAY-$PYVER.tar.xz" artifacts/
 
 deploy:
   provider: gcs
