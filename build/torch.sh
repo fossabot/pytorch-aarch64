@@ -15,7 +15,7 @@ git submodule sync
 git submodule update --init --recursive
 
 rm build/CMakeCache.txt || :
-# export MAX_JOBS=1
+export MAX_JOBS=1
 # export BUILD_TEST=0
 
 python3 setup.py build > /dev/null
