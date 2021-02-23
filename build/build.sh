@@ -2,8 +2,6 @@
 
 set -xe
 
-while sleep 5m; do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done &
-
 echo "Python version: $1"
 echo "Building PyTorch"
 BUILD_PATH=$(pwd)
