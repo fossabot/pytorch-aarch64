@@ -19,6 +19,7 @@ jobs:
 
 before_install:
   - bash check-arch.sh
+  - free -h
   - docker pull "kumatea/build:py$PYVER-ci"
 
 install:

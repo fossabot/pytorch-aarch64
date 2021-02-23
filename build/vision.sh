@@ -16,7 +16,7 @@ git submodule update --init --recursive
 
 
 # export MAX_JOBS=1
-export BUILD_TEST=0
+# export BUILD_TEST=0
 
 python3 setup.py build > /dev/null
 python3 setup.py install > /dev/null
